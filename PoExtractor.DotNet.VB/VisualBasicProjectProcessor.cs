@@ -11,7 +11,7 @@ using PoExtractor.DotNet.VB.MetadataProviders;
 namespace PoExtractor.DotNet.VB
 {
     /// <summary>
-    /// Extracts localizable strings from all *.vb files in the project path and *.cshtml files in the folde Views under the project path
+    /// Extracts localizable strings from all *.vb files in the project path and *.cshtml files in the folder Views under the project path
     /// </summary>
     public class VisualBasicProjectProcessor : RazorViewsProcessor
     {
@@ -24,7 +24,11 @@ namespace PoExtractor.DotNet.VB
                 {
                     new SingularStringExtractor(codeMetadataProvider),
                     new PluralStringExtractor(codeMetadataProvider),
-                    new DataAnnotationStringExtractor(codeMetadataProvider)
+                    new ErrorMessageAnnotationStringExtractor(codeMetadataProvider),
+                    new DisplayAttributeDescriptionStringExtractor(codeMetadataProvider),
+                    new DisplayAttributeNameStringExtractor(codeMetadataProvider),
+                    new DisplayAttributeGroupNameStringExtractor(codeMetadataProvider),
+                    new DisplayAttributeShortNameStringExtractor(codeMetadataProvider)
                 }, strings);
 
             foreach (var file in Directory.EnumerateFiles(path, "*.vb", SearchOption.AllDirectories).OrderBy(file => file))
@@ -53,7 +57,11 @@ namespace PoExtractor.DotNet.VB
             {
                 new SingularStringExtractor(razorMetadataProvider),
                 new PluralStringExtractor(razorMetadataProvider),
-                new DataAnnotationStringExtractor(razorMetadataProvider)
+                new ErrorMessageAnnotationStringExtractor(razorMetadataProvider),
+                new DisplayAttributeDescriptionStringExtractor(razorMetadataProvider),
+                new DisplayAttributeNameStringExtractor(razorMetadataProvider),
+                new DisplayAttributeGroupNameStringExtractor(razorMetadataProvider),
+                new DisplayAttributeShortNameStringExtractor(razorMetadataProvider)
             };
     }
 }

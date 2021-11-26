@@ -2,18 +2,18 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>PoExtractor</AssemblyName>
     <ToolCommandName>extractpo</ToolCommandName>
     <PackAsTool>true</PackAsTool>
-    <Version>0.4.0</Version>
+    <Version>0.5.0</Version>
     <PackageId>PoExtractor.Fork</PackageId>
     <Authors>Lukas Kabrt, Gabriel Alb</Authors>
     <Company />
     <Product />
-    <Description>Fork of PoExtractor (0.4.0) by Lukas Kabrt. It sorts files by name when looping them for string extraction.</Description>
-    <AssemblyVersion>0.4.0.0</AssemblyVersion>
-    <PackageVersion>0.4.0.3</PackageVersion>
+    <Description>Fork of PoExtractor (0.5.0) by Lukas Kabrt. It sorts files by name when looping them for string extraction.</Description>
+    <AssemblyVersion>0.5.0.0</AssemblyVersion>
+    <PackageVersion>0.5.0.1</PackageVersion>
     <PackageReleaseNotes>This might a temporary package. If the pull request is accepted, I will take down the package.  </PackageReleaseNotes>
   </PropertyGroup>
 

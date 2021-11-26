@@ -8,12 +8,12 @@ using PoExtractor.Core.Contracts;
 
 namespace PoExtractor.DotNet
 {
-    public class DataAnnotationStringExtractor : LocalizableStringExtractor<SyntaxNode>
+    public class ErrorMessageAnnotationStringExtractor : LocalizableStringExtractor<SyntaxNode>
     {
         private const string ErrorMessageAttributeName = "ErrorMessage";
         private const string DisplayAttributeName = "Display";
 
-        public DataAnnotationStringExtractor(IMetadataProvider<SyntaxNode> metadataProvider)
+        public ErrorMessageAnnotationStringExtractor(IMetadataProvider<SyntaxNode> metadataProvider)
             : base(metadataProvider)
         {
 
