@@ -22,12 +22,19 @@ namespace PoExtractor.Razor.MetadataProviders {
 
         public string GetContext(SyntaxNode node) {
             var path = node.SyntaxTree.FilePath.TrimStart(this.BasePath);
-            return path.Replace(Path.DirectorySeparatorChar, '.').Replace(".cshtml", string.Empty);
+            var pathElemList = path.Split('\\').ToList();
+            pathElemList.RemoveAt(0);
+            
+            return string.Join(Path.DirectorySeparatorChar, pathElemList).Replace(Path.DirectorySeparatorChar, '.').Replace(".cshtml", string.Empty);
         }
 
         public LocalizableStringLocation GetLocation(SyntaxNode node) {
+            var path = node.SyntaxTree.FilePath.TrimStart(this.BasePath);
+            var pathElemList = path.Split(Path.DirectorySeparatorChar).ToList();
+            pathElemList.RemoveAt(0);
+            
             var result = new LocalizableStringLocation {
-                SourceFile = node.SyntaxTree.FilePath.TrimStart(this.BasePath)
+                SourceFile = string.Join(Path.DirectorySeparatorChar, pathElemList).Replace(Path.DirectorySeparatorChar, '.')
             };
 
             var statement = node.Ancestors().OfType<ExpressionStatementSyntax>().FirstOrDefault();

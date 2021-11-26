@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using PoExtractor.Core;
@@ -17,9 +18,10 @@ namespace PoExtractor.DotNet.CS.MetadataProviders {
 
         public string GetContext(SyntaxNode node) {
             var @namespace = node.Ancestors().OfType<NamespaceDeclarationSyntax>().FirstOrDefault()?.Name.ToString();
-            var @class = node.Ancestors().OfType<ClassDeclarationSyntax>().FirstOrDefault()?.Identifier.ValueText;
+            var classDeclarationSyntax = node.Ancestors().OfType<ClassDeclarationSyntax>().FirstOrDefault();
+            var @class = classDeclarationSyntax?.Identifier.ValueText;
 
-            return $"{@namespace}.{@class}";
+            return $"{@namespace}.{@class}" + (classDeclarationSyntax?.Arity > 0 ? $"`{classDeclarationSyntax.Arity}" : "");
         }
 
         public LocalizableStringLocation GetLocation(SyntaxNode node) {
@@ -27,7 +29,7 @@ namespace PoExtractor.DotNet.CS.MetadataProviders {
 
             return new LocalizableStringLocation {
                 SourceFileLine = lineNumber + 1,
-                SourceFile = node.SyntaxTree.FilePath.TrimStart(this.BasePath),
+                SourceFile = node.SyntaxTree.FilePath.TrimStart(this.BasePath).Replace(Path.DirectorySeparatorChar, '.'),
                 Comment = node.SyntaxTree.GetText().Lines[lineNumber].ToString().Trim()
             };
         }

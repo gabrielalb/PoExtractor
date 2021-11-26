@@ -11,7 +11,7 @@ namespace PoExtractor.DotNet
     public class ErrorMessageAnnotationStringExtractor : LocalizableStringExtractor<SyntaxNode>
     {
         private const string ErrorMessageAttributeName = "ErrorMessage";
-        private const string DisplayAttributeName = "Display";
+        //private const string DisplayAttributeName = "Display";
 
         public ErrorMessageAnnotationStringExtractor(IMetadataProvider<SyntaxNode> metadataProvider)
             : base(metadataProvider)
@@ -23,22 +23,21 @@ namespace PoExtractor.DotNet
         {
             result = null;
 
-            if (node is AttributeSyntax accessor && accessor.ArgumentList != null && node.ToFullString().StartsWith("Display"))
+            if (node is AttributeArgumentSyntax argument
+                && argument.Expression.Parent.ToFullString().StartsWith(ErrorMessageAttributeName)
+                && node.Parent?.Parent is AttributeSyntax accessor
+                //&& accessor.Name.ToString() == DisplayAttributeName
+                && argument.Expression is LiteralExpressionSyntax literal
+                && literal.IsKind(SyntaxKind.StringLiteralExpression))
             {
-                var argument = accessor.ArgumentList.Arguments
-                    .Where(a => a.Expression.Parent.ToFullString().StartsWith("Name=") || a.Expression.Parent.ToFullString().StartsWith("Name ="))
-                    .FirstOrDefault();
-                if (argument != null && argument.Expression is LiteralExpressionSyntax literal && literal.IsKind(SyntaxKind.StringLiteralExpression))
+                result = new LocalizableStringOccurence()
                 {
-                    result = new LocalizableStringOccurence()
-                    {
-                        Text = literal.Token.ValueText,
-                        Context = MetadataProvider.GetContext(node),
-                        Location = MetadataProvider.GetLocation(node)
-                    };
+                    Text = literal.Token.ValueText,
+                    Context = MetadataProvider.GetContext(node),
+                    Location = MetadataProvider.GetLocation(node)
+                };
 
-                    return true;
-                }
+                return true;
             }
 
             return false;
