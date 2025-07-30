@@ -44,7 +44,7 @@ public class CSharpMetadataProvider : IMetadataProvider<SyntaxNode>
         var classes = node
             .Ancestors()
             .OfType<ClassDeclarationSyntax>()
-            .Select(c => c.Identifier.ValueText);
+            .Select(c => c.Identifier.ValueText + (c.Arity > 0 ? $"`{c.Arity}" : ""));
 
         var @class = classes.Count() == 1
             ? classes.Single()
@@ -68,7 +68,7 @@ public class CSharpMetadataProvider : IMetadataProvider<SyntaxNode>
         return new LocalizableStringLocation
         {
             SourceFileLine = lineNumber + 1,
-            SourceFile = node.SyntaxTree.FilePath.TrimStart(_basePath),
+            SourceFile = node.SyntaxTree.FilePath.TrimStart(_basePath).Replace(Path.DirectorySeparatorChar, '.'),
             Comment = node.SyntaxTree.GetText().Lines[lineNumber].ToString().Trim()
         };
     }

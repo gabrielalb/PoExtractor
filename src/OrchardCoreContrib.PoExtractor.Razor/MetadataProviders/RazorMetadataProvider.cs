@@ -36,8 +36,11 @@ public class RazorMetadataProvider : IMetadataProvider<SyntaxNode>
 
         var path = node.SyntaxTree.FilePath.TrimStart(_basePath);
         path = RemoveRazorFileExtension(path);
+        
+        var pathElemList = path.Split('\\').ToList();
+        pathElemList.RemoveAt(0);
 
-        return path.Replace(Path.DirectorySeparatorChar, '.');
+        return string.Join(Path.DirectorySeparatorChar, pathElemList).Replace(Path.DirectorySeparatorChar, '.');
     }
 
     private static string RemoveRazorFileExtension(string path)
@@ -51,10 +54,14 @@ public class RazorMetadataProvider : IMetadataProvider<SyntaxNode>
     public LocalizableStringLocation GetLocation(SyntaxNode node)
     {
         ArgumentNullException.ThrowIfNull(node);
+        
+        var path = node.SyntaxTree.FilePath.TrimStart(_basePath);
+        var pathElemList = path.Split(Path.DirectorySeparatorChar).ToList();
+        pathElemList.RemoveAt(0);
 
         var result = new LocalizableStringLocation
         {
-            SourceFile = node.SyntaxTree.FilePath.TrimStart(_basePath)
+            SourceFile = string.Join(Path.DirectorySeparatorChar, pathElemList).Replace(Path.DirectorySeparatorChar, '.')
         };
 
         var statement = node

@@ -1,22 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<AssemblyName>OrchardCoreContrib.PoExtractor</AssemblyName>
 		<ToolCommandName>extractpo</ToolCommandName>
 		<PackAsTool>true</PackAsTool>
 		<Version>1.2.0</Version>
-		<Authors>The Orchard Core Contrib Team</Authors>
+		<Authors>gabriel.alb</Authors>
 		<Company />
 		<Description>.NET Core global tool for extracting translatable strings from the OrchardCore source files.</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageProjectUrl>https://github.com/OrchardCoreContrib/OrchardCoreContrib.PoExtractor</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/OrchardCoreContrib/OrchardCoreContrib.PoExtractor</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/gabrielalb/PoExtractor</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/gabrielalb/PoExtractor</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<IsPackable>true</IsPackable>
 		<PackageTags>Orchard Core, Orchard Core Contrib, Localization, PO</PackageTags>
 		<PackageReleaseNotes>https://github.com/OrchardCoreContrib/OrchardCoreContrib.PoExtractor/releases</PackageReleaseNotes>
-		<PackageId>OrchardCoreContrib.PoExtractor</PackageId>
+		<PackageId>PoExtractor.Fork</PackageId>
 		<PackageIcon>icon.png</PackageIcon>
 		<Product>Orchard Core Contrib Portable Object Extraction Tool</Product>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
