@@ -22,8 +22,6 @@ public class ErrorMessageAnnotationStringExtractor(IMetadataProvider<SyntaxNode>
     /// <inheritdoc/>
     public override bool TryExtract(SyntaxNode node, out LocalizableStringOccurence result)
     {
-        private const string ErrorMessageAttributeName = "ErrorMessage";
-        //private const string DisplayAttributeName = "Display";
         ArgumentNullException.ThrowIfNull(node, nameof(node));
 
         result = null;
@@ -34,7 +32,7 @@ public class ErrorMessageAnnotationStringExtractor(IMetadataProvider<SyntaxNode>
                 .Where(a => a.Expression.Parent.ToFullString().StartsWith(ErrorMessageAttributeName))
                 .FirstOrDefault();
 
-            if (argument != null && argument.Expression is LiteralExpressionSyntax literal && literal.IsKind(SyntaxKind.StringLiteralExpression))
+            if (argument != null && node.Parent?.Parent is AttributeSyntax && argument.Expression is LiteralExpressionSyntax literal && literal.IsKind(SyntaxKind.StringLiteralExpression))
             {
                 result = CreateLocalizedString(literal.Token.ValueText, null, node);
                 return true;
